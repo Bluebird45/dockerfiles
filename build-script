@@ -20,89 +20,6 @@ docker rm $(docker ps -aq)
 docker run -it --name safe_vault-amd64-builder -d safe_vault-amd64
 
 
-# Run the build script in the container:
-
-docker exec safe_vault-amd64-builder /compile
-
-
-# Loop while safe_vault is compiling
-
-# Set a variable, "finished", equal to "done123" (if the compile has completed)
-# or NULL (if it has not completed).
-
-FINISHED=$(docker export safe_vault-amd64-builder | tar tf - | grep -o done123)
- 
-while true 
-do 
-	if [ ! $FINISHED="done123" ]; then
-			sleep 1m
-		else    
-			docker cp safe_vault-amd64-builder:/safe_vault ~
-			break   #exit the loop
-	fi
-done 
- 
-
-# Stop the container:
-
-docker stop safe_vault-amd64-builder
-
-
-##########BUILD AND EXPORT ARMV7 SAFE_VAULT##########
-
-
-# Run a non-interactive container based on the image safe_vault-armv7:
-
-docker run -it --name safe_vault-armv7-builder -d safe_vault-armv7
-
-
-# Run the build script in the container:
-
-docker exec safe_vault-armv7-builder /compile
-
-
-# Loop while safe_vault is compiling
-
-# Set a variable, "finished", equal to "done123" (if the compile has completed)
-# or NULL (if it has not completed).
-FINISHED=$(docker export safe_vault-armv7-builder | tar tf - | grep -o done123)
- 
-while true 
-do 
-	if [ ! $FINISHED="done123" ]; then
-			sleep 1m
-		else    
-			docker cp safe_vault-armv7-builder:/safe_vault ~
-			break   #exit the loop
-	fi
-done 
- 
-
-# Stop the container:
-
-docker stop safe_vault-armv7-builder
-#! /bin/sh
-
-
-##########CONTAINER CLEANOUT##########
-
-
-# Stop all containers:
-docker run -it hello-world > /dev/null
-docker stop $(docker ps -aq)
-
-# Remove all containers:
-docker rm $(docker ps -aq)
-
-
-##########BUILD AND EXPORT AMD64 SAFE_VAULT##########
-
-
-# Run a non-interactive container based on the image safe_vault-amd64:
-
-docker run -it --name safe_vault-amd64-builder -d safe_vault-amd64
-
-
 # Set a variable equal to the file path to the compile image:
 
 TARGET=/projects/safe_vault/target/x86_64-unknown-linux-musl/release/safe_vault
@@ -125,7 +42,8 @@ do
 	if [ ! $FINISHED="done123" ]; then
 			sleep 1m
 		else    
-			docker cp safe_vault-amd64-builder:$TARGET ~/safe_vault-amd64/
+			mkdir -p target
+			docker cp safe_vault-amd64-builder:$TARGET target
 			break   #exit the loop
 	fi
 done 
@@ -164,8 +82,9 @@ while true
 do 
 	if [ ! $FINISHED="done123" ]; then
 			sleep 1m
-		else    
-			docker cp safe_vault-armv7-builder:$TARGET ~/safe_vault-armv7/
+		else
+			mkdir -p target
+			docker cp safe_vault-armv7-builder:$TARGET target
 			break   #exit the loop
 	fi
 done 
