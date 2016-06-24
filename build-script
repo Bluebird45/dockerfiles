@@ -42,8 +42,8 @@ do
 	if [ ! $FINISHED="done123" ]; then
 			sleep 1m
 		else    
-			mkdir -p target
-			docker cp safe_vault-amd64-builder:$TARGET target
+			mkdir -p target/safe_vault-amd64
+			docker cp safe_vault-amd64-builder:$TARGET target/safe_vault-amd64
 			break   #exit the loop
 	fi
 done 
@@ -83,8 +83,8 @@ do
 	if [ ! $FINISHED="done123" ]; then
 			sleep 1m
 		else
-			mkdir -p target
-			docker cp safe_vault-armv7-builder:$TARGET target
+			mkdir -p target/safe_vault-amd64
+			docker cp safe_vault-armv7-builder:$TARGET target/safe_vault-amd64
 			break   #exit the loop
 	fi
 done 
