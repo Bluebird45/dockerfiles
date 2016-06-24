@@ -17,7 +17,7 @@ $ chmod +x build-script
 cd into each folder and:
 
 ```
-$ docker build -t ${PWD##*/} .
+$ docker build -t ${PWD##*/} .    # a regex to get the name of the folder, saves typing image names
 
 $ cd ..
 ```
