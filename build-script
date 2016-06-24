@@ -37,7 +37,7 @@ do
 	if [ ! $FINISHED="done123" ]; then
 			sleep 1m
 		else    
-			docker cp safe_vault-amd64-builder:/safe_vault /var/www/html/amd64
+			docker cp safe_vault-amd64-builder:/safe_vault ~
 			break   #exit the loop
 	fi
 done 
@@ -72,7 +72,7 @@ do
 	if [ ! $FINISHED="done123" ]; then
 			sleep 1m
 		else    
-			docker cp safe_vault-armv7-builder:/safe_vault /var/www/html/armv7
+			docker cp safe_vault-armv7-builder:/safe_vault ~
 			break   #exit the loop
 	fi
 done 
