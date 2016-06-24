@@ -1,0 +1,88 @@
+#! /bin/sh
+
+# This is a script to run on the host.
+# It will load each container, run its internal compile script
+# and copy out the resulting binary.
+
+
+##########CONTAINER CLEANOUT##########
+
+
+# Stop all containers:
+docker run -it hello-world > /dev/null
+docker stop $(docker ps -aq)
+
+# Remove all containers:
+docker rm $(docker ps -aq)
+
+
+##########BUILD AND EXPORT AMD64 SAFE_VAULT##########
+
+
+# Create an instance of safe-amd64, keep running, non-interactive:
+
+docker run -it --name safe-amd64-builder -d safe-amd64
+
+
+# Run the build script in the container:
+
+docker exec safe-amd64-builder /compile
+
+
+# Loop while safe_vault is compiling
+
+# Set a variable, "finished", equal to "done123" (if the compile has completed)
+# or NULL (if it has not completed).
+
+FINISHED=$(docker export safe-amd64-builder | tar tf - | grep -o done123)
+ 
+while true 
+do 
+	if [ ! $FINISHED="done123" ]; then
+			sleep 1m
+		else    
+			docker cp safe-amd64-builder:/safe_vault /var/www/html/amd64
+			break   #exit the loop
+	fi
+done 
+ 
+
+# Stop the container:
+
+docker stop safe-amd64-builder
+
+
+##########BUILD AND EXPORT ARMV7 SAFE_VAULT##########
+
+
+# Create an instance of safe-armv7, keep running, non-interactive:
+
+docker run -it --name safe-armv7-builder -d safe-armv7
+
+
+# Run the build script in the container:
+
+docker exec safe-armv7-builder /compile
+
+
+# Loop while safe_vault is compiling
+
+# Set a variable, "finished", equal to "done123" (if the compile has completed)
+# or NULL (if it has not completed).
+FINISHED=$(docker export safe-armv7-builder | tar tf - | grep -o done123)
+ 
+while true 
+do 
+	if [ ! $FINISHED="done123" ]; then
+			sleep 1m
+		else    
+			docker cp safe-armv7-builder:/safe_vault ~/safe_vault-amd64/
+			break   #exit the loop
+	fi
+done 
+ 
+
+# Stop the container:
+
+docker stop safe-armv7-builder
+
