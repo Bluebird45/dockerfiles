@@ -8,20 +8,21 @@ $ mkdir ~/safe_vault-amd64 ~/safe_vault-armv7   # and so on, for future addition
 ```
 
 Clone this repo.
+```
+$ cd dockerfiles
 
-cd dockerfiles
-
-chmod +x build-script
+$ chmod +x build-script
+```
 
 cd into each folder and:
 
 ```
 $ docker build -t ${PWD##*/} .
+
+$ cd ..
 ```
-cd ..
 
 Run the script:
-.
 ```
 $ ./build-script
 ```
