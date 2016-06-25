@@ -1,15 +1,15 @@
-Dockerfiles for compiling Maidsafe's safe_vault.
-================================================
+<h2>Dockerfiles for compiling Maidsafe's safe_vault</h2>
 
-Usage:
-------
+<h3>Usage:</h3>
 
 1. Clone this repo.
 
 2. ``` $ cd dockerfiles```
 
 3. Create the Docker images by cd'ing into each directory and:
-```$ docker build -t ${PWD##*/} .    # a regex to get the name of the folder, saves typing image names```
+```
+$ docker build -t ${PWD##*/} .    # a regex to get the name of the folder
+```
 
 4. Run the script:
 ```
