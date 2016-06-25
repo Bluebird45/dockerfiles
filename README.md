@@ -7,16 +7,16 @@
 2. ``` $ cd dockerfiles```
 
 3. Create the Docker images by cd'ing into each directory and:
-```
-$ docker build -t ${PWD##*/} .    # a regex to get the name of the folder
-```
+   ```
+   $ docker build -t ${PWD##*/} .    # a regex to get the name of the folder
+   ```
 
 4. Run the script:
-```
-$ chmod +x build
+   ```
+   $ chmod +x build
 
-$ ./build
-```
+   $ ./build
+   ```
 
 The resulting binaries will be found in directory "target".
 
