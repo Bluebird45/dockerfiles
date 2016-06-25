@@ -4,7 +4,7 @@
 
 1. Clone this repo.
 
-2. ``` $ cd dockerfiles```
+2.    ``` $ cd dockerfiles```
 
 3. Create the Docker images by cd'ing into each directory and:
    ```
