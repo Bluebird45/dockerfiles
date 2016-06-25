@@ -1,28 +1,23 @@
 Dockerfiles for compiling Maidsafe's safe_vault.
+================================================
 
-<b>Usage:</b>
+Usage:
+------
 
-Create folders to receive the built binaries:
+1. Clone this repo.
+
+2. ``` $ cd dockerfiles```
+
+3. Create the Docker images by cd'ing into each directory and:
+```$ docker build -t ${PWD##*/} .    # a regex to get the name of the folder, saves typing image names```
+
+4. Run the script:
 ```
-$ mkdir ~/safe_vault-amd64 ~/safe_vault-armv7   # and so on, for future additions
-```
+$ chmod +x build
 
-Clone this repo.
-```
-$ cd dockerfiles
-
-$ chmod +x build-script
-```
-
-cd into each folder and:
-
-```
-$ docker build -t ${PWD##*/} .    # a regex to get the name of the folder, saves typing image names
-
-$ cd ..
+$ ./build
 ```
 
-Run the script:
-```
-$ ./build-script
-```
+The resulting binaries will be found in directory "target".
+
+For subsequent builds you need only run the script in order to obtain fresh binaries. The script can be run from anywhere on your system where you have write privileges.
