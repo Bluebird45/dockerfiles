@@ -8,7 +8,7 @@
 
 3. Create the Docker images by cd'ing into each directory and:
    ```
-   $ docker build -t ${PWD##*/} .    # a regex to get the name of the folder
+   $ docker build -t ${PWD##*/} .    # regex to get the name of the current directory
    ```
 
 4. Run the script:
